@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import MountainContainer from './components/MountainContainer';
+import MountainItem  from './components/MountainItem';
+const mountainsURL = "http://localhost:3000/mountains"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  
+  state = {
+    mountains:[],
+  }
+
+
+  componentDidMount(){
+    this.getMountains()
+  }
+  
+  getMountains = () => {
+    fetch(mountainsURL)
+      .then(response => response.json())
+      .then(mountains => this.setState({mountains}))
+
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Mountains App (testing)</h1>
+        <MountainContainer mountains={this.state.mountains} />
+      </div>
+    );
+  }
 }
 
 export default App;
